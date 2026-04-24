@@ -29,7 +29,7 @@ public class JuegosController {
 
     @GetMapping("/juegos/{id}")
     public ResponseEntity<Juegos> obtenerJuegosPorId(@PathVariable Long id) {
-        Juegos response = service.getIdGame(id);
+        Juegos response = service.getGameById(id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -37,6 +37,13 @@ public class JuegosController {
     @PostMapping("/juegos")
     public ResponseEntity<Juegos> guardarJuego(@RequestBody Juegos juegos) {
         Juegos response = service.saveGame(juegos);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/juegos/{id}")
+    public ResponseEntity<Juegos> actualizarJuego(@RequestBody Juegos juegos, @PathVariable Long id) {
+        Juegos response = service.updateGame(juegos, id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -24,7 +24,7 @@ public class JuegosService {
         return repository.findAll();
     }
 
-    public Juegos getIdGame(Long id) {
+    public Juegos getGameById(Long id) {
         Optional<Juegos> result = repository.findById(id);
 
         if (result.isEmpty()) {
@@ -42,8 +42,18 @@ public class JuegosService {
         return repository.save(juegos);
     }
 
+    public Juegos updateGame(Juegos juegos, Long id) {
+        if (getGameById(id) == null) {
+            throw new JuegosExceptions("ID not found or not exists");
+        }
+
+        juegos.setId(id);
+
+        return repository.save(juegos);
+    }
+
     public void deleteGame(Long id) {
-        if (getIdGame(id) == null) {
+        if (getGameById(id) == null) {
             throw new JuegosExceptions("ID not found or not exists");
         }
 
