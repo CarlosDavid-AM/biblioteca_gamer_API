@@ -1,11 +1,13 @@
 package com.biblioteca.gemer.Service;
 
+import com.biblioteca.gemer.Exceptions.JuegosExceptions;
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Repository.JuegosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,19 +28,23 @@ public class JuegosService {
         Optional<Juegos> result = repository.findById(id);
 
         if (result.isEmpty()) {
-            System.out.println("ID not fount.");
+            throw new JuegosExceptions("ID not found or not exists");
         }
 
         return result.get();
     }
 
     public Juegos saveGame(Juegos juegos) {
+        if (Objects.nonNull(juegos.getId())) {
+            throw new JuegosExceptions("Id Duplicated");
+        }
+
         return repository.save(juegos);
     }
 
     public void deleteGame(Long id) {
         if (getIdGame(id) == null) {
-            System.out.println("ID not fount.");
+            throw new JuegosExceptions("ID not found or not exists");
         }
 
         repository.deleteById(id);
