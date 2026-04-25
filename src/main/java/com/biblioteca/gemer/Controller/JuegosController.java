@@ -2,13 +2,17 @@ package com.biblioteca.gemer.Controller;
 
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Service.JuegosService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api")
 public class JuegosController {
@@ -28,28 +32,28 @@ public class JuegosController {
     }
 
     @GetMapping("/juegos/{id}")
-    public ResponseEntity<Juegos> obtenerJuegosPorId(@PathVariable Long id) {
+    public ResponseEntity<Juegos> obtenerJuegosPorId(@Min(1) @PathVariable Long id) {
         Juegos response = service.getGameById(id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/juegos")
-    public ResponseEntity<Juegos> guardarJuego(@RequestBody Juegos juegos) {
+    public ResponseEntity<Juegos> guardarJuego(@Valid @RequestBody Juegos juegos) {
         Juegos response = service.saveGame(juegos);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/juegos/{id}")
-    public ResponseEntity<Juegos> actualizarJuego(@RequestBody Juegos juegos, @PathVariable Long id) {
+    public ResponseEntity<Juegos> actualizarJuego(@Valid @RequestBody Juegos juegos, @Min(1) @PathVariable Long id) {
         Juegos response = service.updateGame(juegos, id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/juegos/{id}")
-    public ResponseEntity<Void> eliminarJuegosPorId(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarJuegosPorId(@Min(1) @PathVariable Long id) {
         service.deleteGame(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

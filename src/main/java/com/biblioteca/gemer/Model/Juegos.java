@@ -3,6 +3,8 @@ package com.biblioteca.gemer.Model;
 import com.biblioteca.gemer.Enums.EstadoEnum;
 import com.biblioteca.gemer.Enums.PlataformaEnum;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -14,12 +16,15 @@ public class Juegos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nombre del juego es obligatorio")
     @Column(name = "nombre", length = 50, nullable = false)
     private String nombre;
 
+    @NotBlank(message = "Url de la imagen juego es obligatorio")
     @Column(name = "imagen_url", length = 500)
     private String imagenUrl;
 
+    @NotNull(message = "Plataforma del juego es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "plataforma", nullable = false)
     private PlataformaEnum plataforma;
