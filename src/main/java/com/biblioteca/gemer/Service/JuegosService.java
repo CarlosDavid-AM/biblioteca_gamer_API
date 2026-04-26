@@ -1,5 +1,6 @@
 package com.biblioteca.gemer.Service;
 
+import com.biblioteca.gemer.Enums.APIError;
 import com.biblioteca.gemer.Exceptions.JuegosExceptions;
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Repository.JuegosRepository;
@@ -28,7 +29,7 @@ public class JuegosService {
         Optional<Juegos> result = repository.findById(id);
 
         if (result.isEmpty()) {
-            throw new JuegosExceptions("ID not found or not exists");
+            throw new JuegosExceptions(APIError.GAME_NOT_FOUND);
         }
 
         return result.get();
@@ -36,7 +37,7 @@ public class JuegosService {
 
     public Juegos saveGame(Juegos juegos) {
         if (Objects.nonNull(juegos.getId())) {
-            throw new JuegosExceptions("Id Duplicated");
+            throw new JuegosExceptions(APIError.GAME_WITH_SAME_ID);
         }
 
         return repository.save(juegos);
@@ -44,7 +45,7 @@ public class JuegosService {
 
     public Juegos updateGame(Juegos juegos, Long id) {
         if (getGameById(id) == null) {
-            throw new JuegosExceptions("ID not found or not exists");
+            throw new JuegosExceptions(APIError.GAME_NOT_FOUND);
         }
 
         juegos.setId(id);
@@ -54,7 +55,7 @@ public class JuegosService {
 
     public void deleteGame(Long id) {
         if (getGameById(id) == null) {
-            throw new JuegosExceptions("ID not found or not exists");
+            throw new JuegosExceptions(APIError.GAME_NOT_FOUND);
         }
 
         repository.deleteById(id);
