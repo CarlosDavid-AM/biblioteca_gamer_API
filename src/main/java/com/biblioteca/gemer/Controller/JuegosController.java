@@ -14,6 +14,7 @@ import java.util.List;
 
 @Validated
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class JuegosController {
 
