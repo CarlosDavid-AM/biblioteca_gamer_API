@@ -64,12 +64,8 @@ public class JuegosService {
     }
 
     // Custom Methods
-    public List<Juegos> getFinishedGames() {
-        return repository.findByEstado(EstadoEnum.TERMINADO);
-    }
-
-    public List<Juegos> getPendingGames() {
-        return repository.findByEstado(EstadoEnum.PENDIENTE);
+    public List<Juegos> getGamesByEstate(EstadoEnum estadoEnum) {
+        return repository.findByEstado(estadoEnum);
     }
 
     public List<Juegos> getGamesByPlatform(PlataformaEnum plataforma) {

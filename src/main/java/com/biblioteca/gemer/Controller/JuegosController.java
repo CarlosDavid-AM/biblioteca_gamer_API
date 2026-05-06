@@ -1,5 +1,6 @@
 package com.biblioteca.gemer.Controller;
 
+import com.biblioteca.gemer.Enums.EstadoEnum;
 import com.biblioteca.gemer.Enums.PlataformaEnum;
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Service.JuegosService;
@@ -40,16 +41,9 @@ public class JuegosController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/juegos/terminados")
-    public ResponseEntity<List<Juegos>> obtenerJuegosTerminados() {
-        List<Juegos> response = service.getFinishedGames();
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/juegos/pendientes")
-    public ResponseEntity<List<Juegos>> obtenerJuegosPendientes() {
-        List<Juegos> response = service.getPendingGames();
+    @GetMapping("/juegos/estado/{estado}")
+    public ResponseEntity<List<Juegos>> obtenerJuegosTerminados(@PathVariable EstadoEnum estado) {
+        List<Juegos> response = service.getGamesByEstate(estado);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
