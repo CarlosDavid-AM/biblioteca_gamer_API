@@ -42,7 +42,7 @@ public class JuegosController {
     }
 
     @GetMapping("/juegos/estado/{estado}")
-    public ResponseEntity<List<Juegos>> obtenerJuegosTerminados(@PathVariable EstadoEnum estado) {
+    public ResponseEntity<List<Juegos>> obtenerJuegosPorEstado(@PathVariable EstadoEnum estado) {
         List<Juegos> response = service.getGamesByEstate(estado);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -51,6 +51,13 @@ public class JuegosController {
     @GetMapping("/juegos/plataforma/{plataforma}")
     public ResponseEntity<List<Juegos>> obtenerJuegosPorPlataforma(@PathVariable PlataformaEnum plataforma) {
         List<Juegos> response = service.getGamesByPlatform(plataforma);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/juegos/estado-plataforma/{estado}/{plataforma}")
+    public ResponseEntity<List<Juegos>> obtenerJuegosPorEstadoAndPlataforma(@PathVariable EstadoEnum estado, @PathVariable PlataformaEnum plataforma) {
+        List<Juegos> response = service.getGamesByEstateAndPlatform(estado, plataforma);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

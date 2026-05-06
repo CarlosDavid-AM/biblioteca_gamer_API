@@ -72,4 +72,8 @@ public class JuegosService {
         return repository.findByPlataforma(plataforma);
     }
 
+    public List<Juegos> getGamesByEstateAndPlatform(EstadoEnum estado, PlataformaEnum plataforma) {
+        return repository.findByEstadoAndPlataforma(estado, plataforma);
+    }
+
 }

@@ -10,4 +10,5 @@ import java.util.List;
 public interface JuegosRepository extends JpaRepository<Juegos, Long> {
     List<Juegos> findByEstado(EstadoEnum estado);
     List<Juegos> findByPlataforma(PlataformaEnum plataforma);
+    List<Juegos> findByEstadoAndPlataforma(EstadoEnum estado, PlataformaEnum plataforma);
 }
