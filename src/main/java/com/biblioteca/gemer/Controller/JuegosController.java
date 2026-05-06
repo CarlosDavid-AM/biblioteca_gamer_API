@@ -39,6 +39,20 @@ public class JuegosController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/juegos/terminados")
+    public ResponseEntity<List<Juegos>> obtenerJuegosTerminados() {
+        List<Juegos> response = service.getFinishedGames();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/juegos/pendientes")
+    public ResponseEntity<List<Juegos>> obtenerJuegosPendientes() {
+        List<Juegos> response = service.getPendingGames();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PostMapping("/juegos")
     public ResponseEntity<Juegos> guardarJuego(@Valid @RequestBody Juegos juegos) {
         Juegos response = service.saveGame(juegos);

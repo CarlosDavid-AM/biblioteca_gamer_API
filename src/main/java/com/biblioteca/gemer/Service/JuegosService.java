@@ -1,6 +1,7 @@
 package com.biblioteca.gemer.Service;
 
 import com.biblioteca.gemer.Enums.APIError;
+import com.biblioteca.gemer.Enums.EstadoEnum;
 import com.biblioteca.gemer.Exceptions.JuegosExceptions;
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Repository.JuegosRepository;
@@ -61,5 +62,13 @@ public class JuegosService {
         repository.deleteById(id);
     }
 
+    // Custom Methods
+    public List<Juegos> getFinishedGames() {
+        return repository.findByEstado(EstadoEnum.TERMINADO);
+    }
+
+    public List<Juegos> getPendingGames() {
+        return repository.findByEstado(EstadoEnum.PENDIENTE);
+    }
 
 }
