@@ -1,5 +1,6 @@
 package com.biblioteca.gemer.Controller;
 
+import com.biblioteca.gemer.Enums.PlataformaEnum;
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Service.JuegosService;
 import jakarta.validation.Valid;
@@ -49,6 +50,13 @@ public class JuegosController {
     @GetMapping("/juegos/pendientes")
     public ResponseEntity<List<Juegos>> obtenerJuegosPendientes() {
         List<Juegos> response = service.getPendingGames();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/juegos/plataforma/{plataforma}")
+    public ResponseEntity<List<Juegos>> obtenerJuegosPorPlataforma(@PathVariable PlataformaEnum plataforma) {
+        List<Juegos> response = service.getGamesByPlatform(plataforma);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

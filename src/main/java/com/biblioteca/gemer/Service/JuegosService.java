@@ -2,6 +2,7 @@ package com.biblioteca.gemer.Service;
 
 import com.biblioteca.gemer.Enums.APIError;
 import com.biblioteca.gemer.Enums.EstadoEnum;
+import com.biblioteca.gemer.Enums.PlataformaEnum;
 import com.biblioteca.gemer.Exceptions.JuegosExceptions;
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Repository.JuegosRepository;
@@ -69,6 +70,10 @@ public class JuegosService {
 
     public List<Juegos> getPendingGames() {
         return repository.findByEstado(EstadoEnum.PENDIENTE);
+    }
+
+    public List<Juegos> getGamesByPlatform(PlataformaEnum plataforma) {
+        return repository.findByPlataforma(plataforma);
     }
 
 }
