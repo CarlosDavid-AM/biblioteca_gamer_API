@@ -6,5 +6,6 @@ public enum PlataformaEnum {
     PS2,
     PS5,
     XBOX,
-    GOG
+    GOG,
+    OTRO
 }
