@@ -6,6 +6,7 @@ import com.biblioteca.gemer.Enums.PlataformaEnum;
 import com.biblioteca.gemer.Exceptions.JuegosExceptions;
 import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Repository.JuegosRepository;
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class JuegosService {
         this.repository = repository;
     }
 
+    @Tool(description = "Get all registered games.")
     public List<Juegos> getAllGames() {
         return repository.findAll();
     }
