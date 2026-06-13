@@ -57,6 +57,7 @@ public class JuegosService {
         return repository.save(juegos);
     }
 
+    @Tool(description = "Deleted one registered game.")
     public void deleteGame(Long id) {
         if (getGameById(id) == null) {
             throw new JuegosExceptions(APIError.GAME_NOT_FOUND);
@@ -66,14 +67,17 @@ public class JuegosService {
     }
 
     // Custom Methods
+    @Tool(description = "Get all games registered by your state.")
     public List<Juegos> getGamesByEstate(EstadoEnum estadoEnum) {
         return repository.findByEstado(estadoEnum);
     }
 
+    @Tool(description = "Get all the games registered by your platform.")
     public List<Juegos> getGamesByPlatform(PlataformaEnum plataforma) {
         return repository.findByPlataforma(plataforma);
     }
 
+    @Tool(description = "Get all games registered by state and by platform.")
     public List<Juegos> getGamesByEstateAndPlatform(EstadoEnum estado, PlataformaEnum plataforma) {
         return repository.findByEstadoAndPlataforma(estado, plataforma);
     }
