@@ -76,8 +76,8 @@ public class JuegosController {
     }
 
     @PutMapping("/juegos/{id}")
-    public ResponseEntity<Juegos> actualizarJuego(@Valid @RequestBody Juegos juegos, @Min(1) @PathVariable Long id) {
-        Juegos response = service.updateGame(juegos, id);
+    public ResponseEntity<JuegosDTO> actualizarJuego(@Valid @RequestBody JuegosDTO juegos, @Min(1) @PathVariable Long id) {
+        JuegosDTO response = service.updateGame(juegos.getNombre(), juegos.getImagenUrl(), juegos.getPlataforma(), juegos.getEstado(), id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

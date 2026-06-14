@@ -61,14 +61,20 @@ public class JuegosService {
         return conversionService.convert(result, JuegosDTO.class);
     }
 
-    public Juegos updateGame(Juegos juegos, Long id) {
-        if (getGameById(id) == null) {
-            throw new JuegosExceptions(APIError.GAME_NOT_FOUND);
-        }
+    @Tool(description = "Update an existing game.")
+    public JuegosDTO updateGame(String nombre, String imagenUrl, PlataformaEnum plataforma, EstadoEnum estado, Long id) {
+        getGameById(id);
 
-        juegos.setId(id);
+        JuegosDTO juegosDTO = new JuegosDTO();
+        juegosDTO.setNombre(nombre);
+        juegosDTO.setImagenUrl(imagenUrl);
+        juegosDTO.setPlataforma(plataforma);
+        juegosDTO.setEstado(estado != null ? estado : EstadoEnum.OBTENIDO);
 
-        return repository.save(juegos);
+        Juegos transformed = conversionService.convert(juegosDTO, Juegos.class);
+        Objects.requireNonNull(transformed).setId(id);
+        Juegos result = repository.save(transformed);
+        return conversionService.convert(result, JuegosDTO.class);
     }
 
     @Tool(description = "Deleted one registered game.")
