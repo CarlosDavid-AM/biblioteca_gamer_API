@@ -53,6 +53,6 @@ La API estará disponible en `http://localhost:8080/api/juegos`.
 
 **Nota:** Este backend se complementa con una frontend que consume la API de este proyecto para su funcionalidad. El proyecto frontend se encuentra en el siguiente enlace:
 
-👉 [Repositorio Backend](https://github.com/CarlosDavid-AM/biblioteca_gamer_frontend) | | https://github.com/CarlosDavid-AM/biblioteca_gamer_frontend
+👉 [Repositorio Frontend](https://github.com/CarlosDavid-AM/biblioteca_gamer_frontend) | | https://github.com/CarlosDavid-AM/biblioteca_gamer_frontend
 
 _Asegúrece de tener el frontend corriendo en `http://localhost:5173` para visualizar los resultados._
