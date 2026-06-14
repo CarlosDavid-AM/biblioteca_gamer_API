@@ -39,6 +39,8 @@ public class JuegosService {
         return result.get();
     }
 
+    // Se espere la implementacion de un DTO para su funcionalidad
+    // @Tool(description = "Create a new game. | If they don't say what game it is, then create any game with fake data.")
     public Juegos saveGame(Juegos juegos) {
         if (Objects.nonNull(juegos.getId())) {
             throw new JuegosExceptions(APIError.GAME_WITH_SAME_ID);
