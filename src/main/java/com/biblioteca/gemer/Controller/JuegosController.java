@@ -1,5 +1,6 @@
 package com.biblioteca.gemer.Controller;
 
+import com.biblioteca.gemer.DTO.JuegosDTO;
 import com.biblioteca.gemer.Enums.EstadoEnum;
 import com.biblioteca.gemer.Enums.PlataformaEnum;
 import com.biblioteca.gemer.Model.Juegos;
@@ -62,9 +63,14 @@ public class JuegosController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * Se actualizó la llamada a service.saveGame dentro del endpoint POST para que coincida con la nueva firma del
+     * metodo, extrayendo los datos del DTO recibido en el cuerpo de la petición.
+     * Razón: Mantener la compatibilidad de tu API REST externa mientras el servicio interno ahora es compatible con las Tools de la IA.
+     */
     @PostMapping("/juegos")
-    public ResponseEntity<Juegos> guardarJuego(@Valid @RequestBody Juegos juegos) {
-        Juegos response = service.saveGame(juegos);
+    public ResponseEntity<JuegosDTO> guardarJuego(@Valid @RequestBody JuegosDTO juegos) {
+        JuegosDTO response = service.saveGame(juegos.getNombre(), juegos.getImagenUrl(), juegos.getPlataforma(), juegos.getEstado());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

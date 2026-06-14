@@ -1,5 +1,6 @@
 package com.biblioteca.gemer.Service;
 
+import com.biblioteca.gemer.DTO.JuegosDTO;
 import com.biblioteca.gemer.Enums.APIError;
 import com.biblioteca.gemer.Enums.EstadoEnum;
 import com.biblioteca.gemer.Enums.PlataformaEnum;
@@ -8,6 +9,7 @@ import com.biblioteca.gemer.Model.Juegos;
 import com.biblioteca.gemer.Repository.JuegosRepository;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +20,12 @@ import java.util.Optional;
 public class JuegosService {
 
     private final JuegosRepository repository;
+    private ConversionService conversionService;
 
     @Autowired
-    public JuegosService(JuegosRepository repository) {
+    public JuegosService(JuegosRepository repository, ConversionService conversionService) {
         this.repository = repository;
+        this.conversionService = conversionService;
     }
 
     @Tool(description = "Get all registered games.")
@@ -39,14 +43,22 @@ public class JuegosService {
         return result.get();
     }
 
-    // Se espere la implementacion de un DTO para su funcionalidad
-    // @Tool(description = "Create a new game. | If they don't say what game it is, then create any game with fake data.")
-    public Juegos saveGame(Juegos juegos) {
-        if (Objects.nonNull(juegos.getId())) {
-            throw new JuegosExceptions(APIError.GAME_WITH_SAME_ID);
-        }
+    /**
+     * Se define parámetros individuales en el metodo anotado con @Tool, Spring AI genera un esquema de función mucho
+     * más claro para el modelo de IA (parámetros nombre, imagenUrl, etc., en lugar de un objeto juegos).
+     * Esto asegura que la inyección de argumentos sea precisa y evita que Jackson intente deserializar una lista en un objeto único.
+     */
+    @Tool(description = "Create a new game. | If they don't say what game it is, then create any game with fake data.")
+    public JuegosDTO saveGame(String nombre, String imagenUrl, PlataformaEnum plataforma, EstadoEnum estado) {
+        JuegosDTO juegosDTO = new JuegosDTO();
+        juegosDTO.setNombre(nombre);
+        juegosDTO.setImagenUrl(imagenUrl);
+        juegosDTO.setPlataforma(plataforma);
+        juegosDTO.setEstado(estado != null ? estado : EstadoEnum.OBTENIDO);
 
-        return repository.save(juegos);
+        Juegos transformed = conversionService.convert(juegosDTO, Juegos.class);
+        Juegos result = repository.save(Objects.requireNonNull(transformed));
+        return conversionService.convert(result, JuegosDTO.class);
     }
 
     public Juegos updateGame(Juegos juegos, Long id) {
