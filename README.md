@@ -20,7 +20,9 @@ Para poder levantar este proyecto localmente, necesitarás tener instalado lo si
 1.  **Java 21**: El proyecto utiliza las últimas características de Java 21.
 2.  **Maven 3.x**: Se incluye el Maven Wrapper (`mvnw`), por lo que no es estrictamente necesario tenerlo instalado globalmente, pero sí una instalación de Java compatible.
 3.  **PostgreSQL**: Base de datos relacional para la persistencia.
-4.  **Variable de Entorno**: Debes configurar la variable de entorno `DB_PASSWORD` con la contraseña de tu usuario de PostgreSQL.
+4.  **Variables de Entorno**: Debes configurar las siguientes variables de entorno:
+    - `DB_PASSWORD`: Contraseña de tu usuario de PostgreSQL.
+    - `OPENAI_API_KEY`: Tu clave de API de OpenAI (necesaria para las funcionalidades de IA).
 
 ## Configuración de la Base de Datos
 
@@ -30,11 +32,32 @@ Por defecto, la aplicación busca una base de datos con los siguientes parámetr
 - **Usuario**: `postgres`
 - **Base de datos**: `biblioteca_gamer` (Asegúrate de crearla antes de iniciar la aplicación).
 
+## IA y Chat Assistant
+
+Este proyecto integra **Spring AI** con OpenAI para ofrecer un asistente virtual que puede interactuar con tu biblioteca de juegos.
+
+### Endpoint de Chat:
+- **Ruta**: `/api/chat`
+- **Método**: `POST`
+- **Cuerpo de la petición (JSON)**:
+    ```json
+    {
+      "prompt": "Tu mensaje para el asistente"
+    }
+    ```
+
+### Ejemplo de uso (cURL):
+```bash
+curl -X POST http://localhost:8080/api/chat \
+     -H "Content-Type: application/json" \
+     -d '{"prompt": "¿Qué juegos tengo en mi biblioteca?"}'
+```
+
 ## Cómo ejecutar el proyecto
 
 1.  Clona el repositorio.
 2.  Asegúrate de tener PostgreSQL corriendo y la base de datos `biblioteca_gamer` creada.
-3.  Configura la variable de entorno `DB_PASSWORD`.
+3.  Configura las variables de entorno `DB_PASSWORD` y `OPENAI_API_KEY`.
 4.  Desde la raíz del proyecto, ejecuta el siguiente comando en tu terminal:
 
     ```bash
